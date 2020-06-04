@@ -1,0 +1,22 @@
+.idea
+
+# weights
+weights
+
+# vscode
+.vscode
+
+# ipynb
+.ipynb_checkpoints
+
+# pycache
+*__pycache__
+
+# test files
+test
+
+# Names 100 Dataset
+Names100Dataset
+
+# large pickle file
+train_X.pkl

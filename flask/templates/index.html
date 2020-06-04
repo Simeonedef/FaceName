@@ -1,0 +1,59 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="index">
+	<h2>Guess the name !</h2>
+
+	<p>To start off, please select a picture containing a face below, and I will tell you what I think your first name
+		is based on a dataset of the most popular 100 american names. For more details on how I work please <a href="" data-toggle="modal" data-target="#helpModal">click here.</a></p>
+
+	<div>
+		<form class="offset-md-2 col-md-8 mt-5" method="post" action="/" enctype="multipart/form-data">
+			<h4>Select a picture !</h4>
+			<dl>
+				<div class="custom-file">
+					<input  id="input-id" type="file" name="file" required >
+				</div>
+			</dl>
+		</form>
+
+
+<!--		<div class="offset-md-2 col-md-8" id="results">-->
+<!--			{% with messages = get_flashed_messages() %}-->
+<!--			  {% if messages %}-->
+<!--				<div class="row">-->
+<!--					<h5>{{ messages[0] }}</h5>-->
+<!--				</div>-->
+<!--				<div class="row">-->
+<!--					<img src={{ messages[1] }}>-->
+<!--				</div>-->
+<!--				<div class="row text-center">-->
+<!--					<h6> Predictions: {{ messages[2] }}</h6>-->
+<!--				</div>-->
+<!--			  {% endif %}-->
+<!--			{% endwith %}-->
+<!--		</div>-->
+
+		<div id="results">
+			{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					<div class="card text-center mx-auto" style="max-width: 50rem;">
+					  <div class="card-header bg-dark text-white">
+						  <h4>{{ messages[0] }}</h4>
+					  </div>
+					  <div class="card-body">
+						<img src={{ messages[1] }}>
+					  </div>
+					  <div class="card-footer bg-primary text-white">
+						  <h5	>Predictions: {{ messages[2] }}</h5>
+					  </div>
+					</div>
+				{% endif %}
+			{% endwith %}
+		</div>
+
+
+
+	</div>
+</div>
+
+{% endblock %}

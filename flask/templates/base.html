@@ -1,0 +1,133 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FaceName</title>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+	<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+		<!-- bootstrap 4.x is supported. You can also use the bootstrap css 3.3.x versions -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+	<!-- the font awesome icon library if using with `fas` theme (or Bootstrap 4.x). Note that default icons used in the plugin are glyphicons that are bundled only with Bootstrap 3.x. -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+	<!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you
+		wish to resize images before upload. This must be loaded before fileinput.min.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/piexif.min.js" type="text/javascript"></script>
+	<!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview.
+		This must be loaded before fileinput.min.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/sortable.min.js" type="text/javascript"></script>
+	<!-- purify.min.js is only needed if you wish to purify HTML content in your preview for
+		HTML files. This must be loaded before fileinput.min.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/purify.min.js" type="text/javascript"></script>
+	<!-- popper.min.js below is needed if you use bootstrap 4.x (for popover and tooltips). You can also use the bootstrap js
+	   3.3.x versions without popper.min.js. -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<!-- bootstrap.min.js below is needed if you wish to zoom and preview file content in a detail modal
+		dialog. bootstrap 4.x is supported. You can also use the bootstrap js 3.3.x versions. -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+	<!-- the main fileinput plugin file -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
+	<!-- following theme script is needed to use the Font Awesome 5.x theme (`fas`) -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/themes/fas/theme.min.js"></script
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">FaceName</a>
+			<div class="form-inline">
+				<button class="btn btn-outline-primary my-2 my-sm-0 mr-2" data-toggle="modal" data-target="#privacyModal">Privacy</button>
+				<button class="btn btn-outline-info my-2 my-sm-0" data-toggle="modal" data-target="#helpModal">Help</button>
+			</div>
+        </div>
+    </nav>
+
+	<!-- Help panel -->
+	<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="helpModalLabel">Face Name Prediction</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<p>As a high level overview, the app uses Facenet's MTCNN to perform face detection, it then passes the face
+				to a trained resnet50 model to retrieve embeddings which is then classified as one of the top 100 US names.
+				The dataset used is Stanford's <a href="https://purl.stanford.edu/tp945cq9122">Names100 Dataset</a>.
+				It contains 80 000 images belonging to one of the 100 classes/names.
+			</p>
+
+		  	<p>As a final aside, I think what I learned from looking at the data and exploring various ways of classification, there is no
+			  correlation between name and face aside from gender and maybe ethnicity, but that last one does not seem to have any strong impacts
+			  in the prediction of the name. This project, was developped for fun to explore the relationship between faces and names.
+		  	</p>
+
+			<p>To use the app, simply upload a picture and the system will detect faces and predict a name for each found face.
+			More information on the <a href="#"><span onclick="window.open('https://github.com/Simeonedef/music_gen_deep_learning');">Github page.</span></a>
+			<br>
+			<br>
+			Siméone de Fremond, BSc AI @University of Manchester, MSc CS @ETH Zürich</p>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-primary" onclick="window.open('https://github.com/Simeonedef/music_gen_deep_learning');">Learn more</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Privacy panel -->
+	<div class="modal fade" id="privacyModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="helpModalLabel">Privacy Declaration</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<p>You are understandably quite concerned about this website's privacy considerations, so here is a high level overview.
+			</p>
+		  	<p>On the privacy side, the pictures are not actually stored on the server. The app merely extracts embeddings, and
+			  as an additional layer of 'peace of mind', the entire storage gets wiped on each page refresh, in case something went wrong
+			  and accidentally stayed on the server. Since the source code is available, feel free to also explore the code base.
+			</p>
+
+			<p>To use the app, simply click one of the options on the page, corresponding to different models and click on generate which will run the python script to generate the appropriate midi file.
+			More information on the <a href="#"><span onclick="window.open('https://github.com/Simeonedef/music_gen_deep_learning');">Github page.</span></a>
+			<br>
+			<br>
+			Siméone de Fremond</p>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-primary" onclick="window.open('https://github.com/Simeonedef/music_gen_deep_learning');">Learn more</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	
+	
+    <div class="container">
+        <div id="content" style="margin-top:2em">{% block content %}{% endblock %}</div>
+    </div>
+</body>
+
+<footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}" type="text/javascript"></script>
+</footer>
+
+</html>
